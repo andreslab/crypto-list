@@ -1,9 +1,8 @@
 import { API_HOST } from "../utils/constants";
 
-const url = `${API_HOST}/api/tickers/`;
-
 export async function getCoinsApi() {
     try {
+        const url = `${API_HOST}/api/tickers/`;
         const response = await fetch(url);
         const result = await response.json();
         return result;
@@ -14,6 +13,7 @@ export async function getCoinsApi() {
 
 export async function getCoinDetailByIdApi(id) {
     try {
+        const url = `${API_HOST}/api/ticker/`;
         const response = await fetch(`${url}?id=${id}`);
         const result = await response.json();
         return result;

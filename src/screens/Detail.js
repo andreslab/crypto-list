@@ -24,9 +24,6 @@ export default function Detail(props) {
         try {
             const response = await getCoinDetailByIdApi("90");
             console.log(`response: ${response}`);
-            // for await (const data of response.results) {
-            //     console.log(`response: ${response}`);
-            // }
         } catch (error) {
             console.error(error);
         }
