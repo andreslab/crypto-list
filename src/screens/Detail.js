@@ -37,7 +37,7 @@ export default function Detail(props) {
     return (
         <ScrollView>
             <Text style={styles.symbol}>{capitalize(coin.symbol)}</Text>
-            <CoinChart />
+            <CoinChart coin={coin} />
             <Text style={styles.change}>{capitalize(coin.percent_change_1h)}</Text>
         </ScrollView>
     )

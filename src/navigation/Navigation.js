@@ -12,19 +12,19 @@ export default function Navigation() {
     return (
         <Stack.Navigator>
             <Stack.Screen
-                name="Home"
-                component={Home}
+                name="Login"
+                component={Login}
                 options={{
-                    tabBarLabel: "Home",
+                    tabBarLabel: "Login",
                     tabBarIcon: ({ color, size }) => (
                         <Icon name="heart" color={color} size={size} />
                     ),
                 }} />
             <Stack.Screen
-                name="Login"
-                component={Login}
+                name="Home"
+                component={Home}
                 options={{
-                    tabBarLabel: "Login",
+                    tabBarLabel: "Home",
                     tabBarIcon: ({ color, size }) => (
                         <Icon name="heart" color={color} size={size} />
                     ),

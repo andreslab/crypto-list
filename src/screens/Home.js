@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import { View, Text, SafeAreaView, FlatList } from 'react-native'
 import CoinList from '../components/CoinList';
 import { getCoinsApi } from '../api/Coin'
+import UserData from "../components/Auth/UserData";
 
 
 export default function Home() {
 
     const [coins, setCoins] = useState([]);
 
+    const auth = null;
 
     useEffect(() => {
         (async () => {
@@ -47,6 +49,7 @@ export default function Home() {
 
     return (
         <SafeAreaView>
+            <View>{auth ? <UserData /> : <Text>Bienvenido</Text>}</View>
             <CoinList
                 coins={coins}
             />
