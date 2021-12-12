@@ -3,12 +3,15 @@ import { View, Text, SafeAreaView, StyleSheet, TextInput, Button, Keyboard } fro
 import { useNavigation } from "@react-navigation/native";
 import { useFormik } from "formik";
 import * as Yup from 'yup';
-import { user } from '../../utils/userDB';
+import { user, userData, userDataAnonymous } from '../../utils/userDB';
+import useAuth from '../../hooks/useAuth';
+
 
 export default function LoginForm() {
     const [error, setError] = useState("");
-
     const navigation = useNavigation();
+    const { login } = useAuth();
+
     const formik = useFormik({
         initialValues: initialValues(),
         validateOnChange: false,
@@ -20,15 +23,16 @@ export default function LoginForm() {
             if (username !== user.username || password !== user.pass) {
                 setError("Username or password invalid");
             } else {
-                navigation.navigate("Home", { name: data.username });
+                //goToHome(userData)
+                login(userData);
+                navigation.navigate("Home");
             }
         }
     });
 
     return (
-        <View>
-            <Text style={styles.title}>Log In</Text>
-            <Text style={styles.label}>User</Text>
+        <View style={styles.content}>
+            < Text style={styles.label} > User</Text >
             <TextInput
                 style={styles.input}
                 placeholder='Username'
@@ -49,8 +53,21 @@ export default function LoginForm() {
                 onPress={formik.handleSubmit}
             />
             <Text style={styles.error}>{formik.errors.username || formik.errors.password || error}</Text>
-        </View>
+
+            <Button
+                title="Skip"
+                style={styles.skip}
+                onPress={() => {
+                    login(userDataAnonymous);
+                    navigation.navigate("Home");
+                }}
+            />
+        </View >
     )
+}
+
+function goToHome(auth) {
+    navigation.navigate("Home", { auth: auth });
 }
 
 function initialValues() {
@@ -68,6 +85,9 @@ function validationSchema() {
 }
 
 const styles = StyleSheet.create({
+    content: {
+        marginTop: 12
+    },
     title: {
         textAlign: "center",
         fontSize: 28,
@@ -88,6 +108,10 @@ const styles = StyleSheet.create({
     },
     button: {
         marginHorizontal: 12,
+    },
+    skip: {
+        position: "absolute",
+        bottom: 50
     },
     error: {
         textAlign: "center",

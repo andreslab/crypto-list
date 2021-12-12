@@ -3,13 +3,13 @@ import { View, Text, SafeAreaView, FlatList } from 'react-native'
 import CoinList from '../components/CoinList';
 import { getCoinsApi } from '../api/Coin'
 import UserData from "../components/Auth/UserData";
+import useAuth from "../hooks/useAuth";
 
 
 export default function Home() {
 
+    const { auth } = useAuth();
     const [coins, setCoins] = useState([]);
-
-    const auth = null;
 
     useEffect(() => {
         (async () => {
@@ -17,11 +17,14 @@ export default function Home() {
         })();
     }, []);
 
+    //console.log(auth);
+
     const loadCoins = async () => {
         try {
             const response = await getCoinsApi();
             const collectionCoins = [];
             for await (const coin of response.data) {
+                if (coin.rank > 50) { break; }
                 collectionCoins.push({
                     id: coin.id,
                     symbol: coin.symbol,
@@ -49,7 +52,7 @@ export default function Home() {
 
     return (
         <SafeAreaView>
-            <View>{auth ? <UserData /> : <Text>Bienvenido</Text>}</View>
+            <View>{auth ? <UserData name={auth.firstName} /> : <Text>Bienvenido</Text>}</View>
             <CoinList
                 coins={coins}
             />

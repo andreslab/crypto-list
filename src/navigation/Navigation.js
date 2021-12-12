@@ -12,7 +12,7 @@ export default function Navigation() {
     return (
         <Stack.Navigator>
             <Stack.Screen
-                name="Login"
+                name="Log In"
                 component={Login}
                 options={{
                     tabBarLabel: "Login",

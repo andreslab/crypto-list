@@ -1,8 +1,11 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 
-export default function UserData() {
+export default function UserData(props) {
+
+    const { name } = props;
+
     return (
-        <Text>Bienvenido {auth.name}</Text>
+        <Text>Bienvenido {name}</Text>
     )
 }
