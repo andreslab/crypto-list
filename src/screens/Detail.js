@@ -14,8 +14,6 @@ export default function Detail(props) {
     } = props;
     const [coin, setCoin] = useState(null);
 
-    const collectionCoins = [];
-
     useEffect(() => {
         (async () => {
             await loadCoinDetail();
@@ -46,11 +44,11 @@ export default function Detail(props) {
 
 const styles = StyleSheet.create({
     symbol: {
-        fontSize: 100,
-        paddingLeft: 50
+        fontSize: 50,
+        paddingLeft: 12
     },
     change: {
-        fontSize: 30,
+        fontSize: 25,
         position: "absolute",
         right: 10,
         top: 10

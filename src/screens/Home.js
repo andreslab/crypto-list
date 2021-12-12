@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, SafeAreaView, FlatList } from 'react-native'
-import CoinList from '../components/CoinList';
+import { View, Text, SafeAreaView } from 'react-native'
+import List from '../components/List/List';
 import { getCoinsApi } from '../api/Coin'
-import UserData from "../components/Auth/UserData";
+import UserGreeting from "../components/Auth/UserGreeting";
 import useAuth from "../hooks/useAuth";
 
 
@@ -52,8 +52,8 @@ export default function Home() {
 
     return (
         <SafeAreaView>
-            <View>{auth ? <UserData name={auth.firstName} /> : <Text>Bienvenido</Text>}</View>
-            <CoinList
+            <View>{auth ? <UserGreeting name={auth.firstName} /> : <Text>Welcome</Text>}</View>
+            <List
                 coins={coins}
             />
         </SafeAreaView>

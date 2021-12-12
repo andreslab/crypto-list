@@ -1,8 +1,8 @@
 import React from 'react'
-import { StyleSheet, View, Text, FlatList } from 'react-native'
-import CoinCard from './CoinCard';
+import { StyleSheet, FlatList } from 'react-native'
+import Card from './Card';
 
-export default function CoinList(props) {
+export default function List(props) {
 
     const { coins } = props;
 
@@ -11,7 +11,7 @@ export default function CoinList(props) {
             data={coins}
             showsVerticalScrollIndicator={false}
             keyExtractor={(coin) => coin.id}
-            renderItem={({ item }) => <CoinCard coin={item} />}
+            renderItem={({ item }) => <Card coin={item} />}
             contentContainerStyle={styles.flatListContentContainer}
         />
     )

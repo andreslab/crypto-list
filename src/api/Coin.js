@@ -12,6 +12,7 @@ export async function getCoinsApi() {
 }
 
 export async function getCoinDetailByIdApi(id) {
+    console.log(`id: ${id}`);
     try {
         const url = `${API_HOST}/api/ticker/`;
         const response = await fetch(`${url}?id=${id}`);

@@ -4,7 +4,7 @@ import { capitalize } from 'lodash';
 import { useNavigation } from "@react-navigation/native";
 
 
-export default function CoinCard(props) {
+export default function Card(props) {
     const { coin } = props;
     const navigation = useNavigation();
 
@@ -19,6 +19,7 @@ export default function CoinCard(props) {
                     <View>
                         <Text style={styles.rank}>{capitalize(coin.rank)}</Text>
                         <Text style={styles.symbol}>{capitalize(coin.symbol)}</Text>
+                        <Text style={styles.price}>{capitalize(coin.price_usd)}</Text>
                         <Text style={styles.change}>{capitalize(coin.percent_change_1h)}</Text>
                     </View>
                 </View>
@@ -47,6 +48,10 @@ const styles = StyleSheet.create({
     },
     symbol: {
         fontSize: 30,
+        paddingLeft: 50
+    },
+    price: {
+        fontSize: 18,
         paddingLeft: 50
     },
     change: {

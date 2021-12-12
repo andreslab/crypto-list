@@ -8,127 +8,72 @@ export default function CoinChart(props) {
     const percent_change_24h = coin.percent_change_24h
     const percent_change_1h = coin.percent_change_1h
     const percent_change_7d = coin.percent_change_7d
-
     const price_usd = coin.price_usd
 
-
-    console.log(coin.percent_change_7d);
-
-
     const data = [
-        100,
-        200,
-        300
+        calculeValue(percent_change_7d, price_usd),
+        calculeValue(percent_change_7d, price_usd),
+        calculeValue(percent_change_7d, price_usd),
+        calculeValue(percent_change_7d, price_usd),
+        calculeValue(percent_change_7d, price_usd),
+        calculeValue(percent_change_24h, price_usd),
+        calculeValue(percent_change_1h, price_usd),
     ]
+    console.log(data)
 
-
-
-    ///........
-
-
-
-    const xAxesSvg = {
-        fontSize: 12,
-        fill: "black",
-        rotation: 70,
-        originY: 15,
-        y: 10
-    };
-    const yAxesSvg = { fontSize: 12, fill: "black" };
-    const verticalContentInset = { left: 10, right: 10, top: 10, bottom: 10 };
-    const xAxisHeight = 50;
+    // const data = [50, 10, 40, 95, -4, -24, 85]
 
     var date = new Date();
 
     var xAxisData = [
-        date.getDate(),
-        date.getDate() - 1,
-        date.getDate() - 2,
-        date.getDate() - 3,
-        date.getDate() - 4,
+        date.getDate() - 6,
         date.getDate() - 5,
-        date.getDate() - 6]
+        date.getDate() - 4,
+        date.getDate() - 3,
+        date.getDate() - 2,
+        date.getDate() - 1,
+        date.getDate()]
 
-    console.log(xAxisData);
-
-
-    var yAxisData = [0];
-    for (var i = 0; i < data.length; i++) {
-        yAxisData.push(data[i].yValue);
-    }
-
-    //.........
+    const axesSvg = { fontSize: 10, fill: 'grey' };
+    const verticalContentInset = { top: 10, bottom: 10 }
+    const xAxisHeight = 30
 
 
     return (
-        <View
-            style={{
-                paddingRight: 10,
-                height: 400,
-                padding: 0,
-                flexDirection: "row"
-            }}
-        >
+        <View style={{ height: 200, padding: 20, flexDirection: 'row' }}>
             <YAxis
-                data={yAxisData}
-                yAccessor={({ item }) => item}
+                data={data}
                 style={{ marginBottom: xAxisHeight }}
                 contentInset={verticalContentInset}
-                svg={yAxesSvg}
-                formatLabel={value => value + " "}
+                svg={axesSvg}
             />
             <View style={{ flex: 1, marginLeft: 10 }}>
                 <LineChart
                     style={{ flex: 1 }}
                     data={data}
-                    yAccessor={({ item }) => item.yValue}
-                    xAccessor={({ item }) => item.xValue}
-                    yMin={0}
-                    yMax={yAxisData[yAxisData.length - 1]}
-                    xMin={xAxisData[0].xValue}
-                    xMax={xAxisData[xAxisData.length - 1].xValue}
                     contentInset={verticalContentInset}
-                    svg={{ stroke: "rgb(134, 65, 244)" }}
+                    svg={{ stroke: 'rgb(134, 65, 244)' }}
                 >
-                    {/* <Grid />
-                    <Decorator /> */}
+                    <Grid />
                 </LineChart>
                 <XAxis
                     style={{ marginHorizontal: -10, height: xAxisHeight }}
-                    data={xAxisData}
-                    xAccessor={({ item }) => item.xValue}
-                    formatLabel={value => {
-                        //need spaces in order for last time ti fit in screen-else it disappears
-                        return "     " + new Date.format(value, "DD:MM:YY");
-                    }
-                    }
+                    data={data}
+                    formatLabel={(value, index) => formatDate(xAxisData[index])}
                     contentInset={{ left: 10, right: 10 }}
-                    svg={xAxesSvg}
+                    svg={axesSvg}
                 />
             </View>
         </View>
     );
 }
 
-function formatDate(date) {
-
-    // var day = date.getDate()
-    // var month = date.getMonth()
-    // var year = date.getFullYear()
-
-    // for (var i = 7; i--; i > 0) [
-    //     day -= i 
-    // ]
-
-    // if (month < 10) {
-    //     console.log(`${day}-0${month}-${year}`)
-    // } else {
-    //     console.log(`${day}-${month}-${year}`)
-    // }
+function formatDate(day) {
+    var date = new Date();
+    return `${day}/${date.getMonth()}`;
 }
 
-
-function percentage(percent, total) {
-
-    return ((percent / 100) * total).toFixed(2)
+function calculeValue(percent, total) {
+    const percentValue = (percent / 100) * total
+    return (total - percentValue)
 }
