@@ -19,12 +19,11 @@ export default function LoginForm() {
         validationSchema: Yup.object(validationSchema()),
         onSubmit: (data) => {
             setError("");
-            const { username, password } = data;
+            const { username } = data;
 
-            if (username !== user.username || password !== user.pass) {
-                setError("Username or password invalid");
+            if (username !== user.username) {
+                setError("Username invalid");
             } else {
-                //goToHome(userData)
                 login(userData);
                 navigation.navigate("Home");
             }
@@ -40,21 +39,13 @@ export default function LoginForm() {
                 autoCapitalize='none'
                 value={formik.values.username}
                 onChangeText={(user) => formik.setFieldValue('username', user)} />
-            <Text style={styles.label}>Password</Text>
-            <TextInput
-                secureTextEntry={true}
-                style={styles.input}
-                placeholder='Password'
-                autoCapitalize='none'
-                value={formik.values.password}
-                onChangeText={(pass) => formik.setFieldValue('password', pass)} />
             <Button
                 title="Log In"
                 style={styles.button}
                 color={COLOR_MAIN}
                 onPress={formik.handleSubmit}
             />
-            <Text style={styles.error}>{formik.errors.username || formik.errors.password || error}</Text>
+            <Text style={styles.error}>{formik.errors.username || error}</Text>
 
             <Button
                 title="Skip"
@@ -76,14 +67,12 @@ function goToHome(auth) {
 function initialValues() {
     return {
         username: "",
-        password: ""
     }
 }
 
 function validationSchema() {
     return {
         username: Yup.string().required("User required"),
-        password: Yup.string().required("Pass required"),
     }
 }
 
