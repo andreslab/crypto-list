@@ -22,7 +22,7 @@ export default function Detail(props) {
     const loadCoinDetail = async () => {
         try {
             const response = await getCoinDetailByIdApi(params.id);
-            console.log(`response: ${response[0].rank}`);
+            //console.log(`response: ${response[0].rank}`);
             setCoin(response[0]);
         } catch (error) {
             console.error(error);
@@ -31,6 +31,8 @@ export default function Detail(props) {
 
     if (!coin) return null;
 
+    startCountDown()
+
     return (
         <ScrollView>
             <Text style={styles.symbol}>{capitalize(coin.symbol)}</Text>
@@ -38,6 +40,15 @@ export default function Detail(props) {
             <Text style={styles.change}>{capitalize(coin.percent_change_1h)}</Text>
         </ScrollView>
     )
+
+    function startCountDown() {
+        setInterval(callApi, 30000);
+    }
+
+    async function callApi() {
+        console.log("call....");
+        await loadCoinDetail();
+    }
 }
 
 

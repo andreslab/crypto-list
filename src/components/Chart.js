@@ -12,10 +12,6 @@ export default function CoinChart(props) {
 
     const data = [
         calculeValue(percent_change_7d, price_usd),
-        calculeValue(percent_change_7d, price_usd),
-        calculeValue(percent_change_7d, price_usd),
-        calculeValue(percent_change_7d, price_usd),
-        calculeValue(percent_change_7d, price_usd),
         calculeValue(percent_change_24h, price_usd),
         calculeValue(percent_change_1h, price_usd),
     ]
@@ -27,10 +23,6 @@ export default function CoinChart(props) {
 
     var xAxisData = [
         date.getDate() - 6,
-        date.getDate() - 5,
-        date.getDate() - 4,
-        date.getDate() - 3,
-        date.getDate() - 2,
         date.getDate() - 1,
         date.getDate()]
 
