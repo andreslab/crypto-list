@@ -4,6 +4,7 @@ import List from '../components/List/List';
 import { getCoinsApi } from '../api/Coin'
 import UserGreeting from "../components/Auth/UserGreeting";
 import useAuth from "../hooks/useAuth";
+import { addCoinsStorage, getCoinsStorage } from '../db/Coin';
 
 
 export default function Home() {
@@ -15,7 +16,7 @@ export default function Home() {
         (async () => {
             await loadCoins();
         })();
-    }, []);
+    }, []); //dentro de [] va algun parametro que indica, si se modifica ese valor se vuelva a ejecutar toda la funcion del useEffect
 
     //console.log(auth);
 
@@ -45,7 +46,10 @@ export default function Home() {
                 });
             }
             setCoins([...coins, ...collectionCoins]);
+            addCoinsLocal(collectionCoins)
         } catch (error) {
+            console.log("local:")
+            HandleTrySomethingFailure();
             console.error(error);
         }
     };
@@ -58,4 +62,21 @@ export default function Home() {
             />
         </SafeAreaView>
     );
+
+    async function addCoinsLocal(coins) {
+        await addCoinsStorage(coins)
+    }
+
+    async function getCoinsLocal() {
+        return await getCoinsStorage()
+    }
+
+    async function HandleTrySomethingFailure() {
+        try {
+            const collectionCoins = await getCoinsLocal();
+            setCoins([...coins, ...collectionCoins]);
+        } catch (IndexOutOfRangeException) {
+            console.error(error);
+        }
+    }
 }

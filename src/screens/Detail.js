@@ -9,7 +9,6 @@ import CoinChart from "../components/Chart";
 export default function Detail(props) {
 
     const {
-        navigation,
         route: { params },
     } = props;
     const [coin, setCoin] = useState(null);
