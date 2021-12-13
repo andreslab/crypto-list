@@ -56,6 +56,12 @@ export default function LoginForm() {
                     navigation.navigate("Home");
                 }}
             />
+            <Text style={{
+                color: "#b0bec5",
+                fontSize: 20,
+                textAlign: "center",
+                marginTop: 20
+            }}>Help: username = andres or just click in skip button</Text>
         </View >
     )
 }
