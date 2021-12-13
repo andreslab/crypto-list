@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, FlatList } from 'react-native'
+import { StyleSheet, FlatList, View } from 'react-native'
 import Card from './Card';
 
 export default function List(props) {
@@ -20,6 +20,7 @@ export default function List(props) {
 
 const styles = StyleSheet.create({
     flatListContentContainer: {
-        marginTop: 30
+        marginTop: 30,
+        backgroundColor: "#23000"
     }
 });

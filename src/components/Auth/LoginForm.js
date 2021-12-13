@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import * as Yup from 'yup';
 import { user, userData, userDataAnonymous } from '../../utils/userDB';
 import useAuth from '../../hooks/useAuth';
+import { COLOR_MAIN } from '../../utils/constants';
 
 
 export default function LoginForm() {
@@ -50,6 +51,7 @@ export default function LoginForm() {
             <Button
                 title="Log In"
                 style={styles.button}
+                color={COLOR_MAIN}
                 onPress={formik.handleSubmit}
             />
             <Text style={styles.error}>{formik.errors.username || formik.errors.password || error}</Text>
@@ -57,6 +59,7 @@ export default function LoginForm() {
             <Button
                 title="Skip"
                 style={styles.skip}
+                color={COLOR_MAIN}
                 onPress={() => {
                     login(userDataAnonymous);
                     navigation.navigate("Home");
@@ -108,10 +111,12 @@ const styles = StyleSheet.create({
     },
     button: {
         marginHorizontal: 12,
+        color: COLOR_MAIN
     },
     skip: {
         position: "absolute",
-        bottom: 50
+        bottom: 50,
+        color: COLOR_MAIN
     },
     error: {
         textAlign: "center",

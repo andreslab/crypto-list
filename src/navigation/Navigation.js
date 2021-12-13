@@ -6,6 +6,7 @@ import Login from '../screens/Login';
 import Detail from '../screens/Detail';
 import useAuth from "../hooks/useAuth";
 import { useNavigation } from "@react-navigation/native";
+import { COLOR_MAIN } from '../utils/constants';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,7 +18,7 @@ export default function Navigation() {
     return (
         <Stack.Navigator screenOptions={{
             headerStyle: {
-                backgroundColor: '#9fa8da',
+                backgroundColor: COLOR_MAIN,
             },
             headerTintColor: '#fff',
             headerTitleStyle: {
@@ -43,7 +44,7 @@ export default function Navigation() {
                                 navigation.goBack();
                             }}
                             title="Log out"
-                            color="#9fa8da"
+                            color={COLOR_MAIN}
 
                         />
                     ),
@@ -71,6 +72,6 @@ const styles = StyleSheet.create({
         color: "#000"
     },
     bar: {
-        color: "#9fa8da"
+        color: COLOR_MAIN
     }
 });

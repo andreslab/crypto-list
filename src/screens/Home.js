@@ -1,26 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, SafeAreaView } from 'react-native'
+import { View, Text, SafeAreaView, ActivityIndicator } from 'react-native'
 import List from '../components/List/List';
 import { getCoinsApi } from '../api/Coin'
 import UserGreeting from "../components/Auth/UserGreeting";
 import useAuth from "../hooks/useAuth";
 import { addCoinsStorage, getCoinsStorage } from '../db/Coin';
+import Filter from '../components/List/Filter';
 
 
 export default function Home() {
 
-    const { auth } = useAuth();
-    const [coins, setCoins] = useState([]);
+    const { auth, coinsFilter, setTotalCoins } = useAuth();
+    const [coinsShowed, setCoinsShowed] = useState([]);
 
     useEffect(() => {
         (async () => {
             await loadCoins();
         })();
-    }, []); //dentro de [] va algun parametro que indica, si se modifica ese valor se vuelva a ejecutar toda la funcion del useEffect
+    }, [coinsFilter]); //dentro de [] va algun parametro que indica, si se modifica ese valor se vuelva a ejecutar toda la funcion del useEffect
 
-    //console.log(auth);
+
 
     const loadCoins = async () => {
+        if (coinsFilter.length > 0) {
+            console.log(`coin filte: ${coinsFilter[0].price_usd}`);
+            setCoinsShowed(coinsFilter);
+            return;
+        }
         try {
             const response = await getCoinsApi();
             const collectionCoins = [];
@@ -45,10 +51,12 @@ export default function Home() {
                     msupply: coin.msupply
                 });
             }
-            setCoins([...coins, ...collectionCoins]);
-            addCoinsLocal(collectionCoins)
+            setTotalCoins(collectionCoins);
+            setCoinsShowed(collectionCoins);
+            //setCoins([...coins, ...collectionCoins]);
+            addCoinsLocal(collectionCoins);
         } catch (error) {
-            console.log("local:")
+            console.log("local:");
             HandleTrySomethingFailure();
             console.error(error);
         }
@@ -57,9 +65,19 @@ export default function Home() {
     return (
         <SafeAreaView>
             <View>{auth ? <UserGreeting name={auth.firstName} /> : <Text>Welcome</Text>}</View>
-            <List
-                coins={coins}
-            />
+            <Filter />
+            <ActivityIndicator style={{
+                width: '100%',
+                top: '200px',
+                position: "absolute"
+            }} size="large" />
+            <View style={{
+                backgroundColor: "#eceff1"
+            }}>
+                <List
+                    coins={coinsShowed}
+                />
+            </View>
         </SafeAreaView>
     );
 
@@ -74,7 +92,8 @@ export default function Home() {
     async function HandleTrySomethingFailure() {
         try {
             const collectionCoins = await getCoinsLocal();
-            setCoins([...coins, ...collectionCoins]);
+            setTotalCoins(collectionCoins);
+            setCoinsShowed(collectionCoins);
         } catch (IndexOutOfRangeException) {
             console.error(error);
         }

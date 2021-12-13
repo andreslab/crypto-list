@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableWithoutFeedback } from 'react-native';
 import { capitalize } from 'lodash';
 import { useNavigation } from "@react-navigation/native";
+import { COLOR_MAIN } from '../../utils/constants';
 
 
 export default function Card(props) {
@@ -12,6 +13,9 @@ export default function Card(props) {
         navigation.navigate("Detail", { id: coin.id });
     };
 
+    const change24h = coin.percent_change_24h;
+    const colorChange24h = change24h.includes("-") ? "#f50057" : "#1de9b6";
+
     return (
         <TouchableWithoutFeedback onPress={goToDetail}>
             <View style={styles.card}>
@@ -20,11 +24,19 @@ export default function Card(props) {
                         <Text style={styles.rank}>{capitalize(coin.rank)}</Text>
                         <Text style={styles.symbol}>{capitalize(coin.symbol)}</Text>
                         <Text style={styles.price}>{capitalize(coin.price_usd)}</Text>
-                        <Text style={styles.change}>{capitalize(coin.percent_change_1h)}</Text>
+                        <Text style={{
+                            fontSize: 20,
+                            position: "absolute",
+                            top: 8,
+                            right: 10,
+                            color: colorChange24h,
+                        }}
+                        >
+                            {capitalize(coin.percent_change_24h)} %</Text>
                     </View>
                 </View>
             </View>
-        </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback >
     );
 }
 
@@ -33,30 +45,29 @@ const styles = StyleSheet.create({
     card: {
         flex: 1,
         height: 100,
-        color: "#f5f5f5",
     },
     spacing: {
         flex: 1,
         padding: 5,
+        margin: 5,
+        backgroundColor: COLOR_MAIN,
+        borderRadius: 20,
     },
     rank: {
         position: "absolute",
-        left: 5,
-        top: 5,
-        color: "#bdbdbd",
-        fontSize: 11,
+        top: 8,
+        left: 10,
+        color: "#fff",
+        fontSize: 20,
     },
     symbol: {
-        fontSize: 30,
-        paddingLeft: 50
+        fontSize: 28,
+        marginLeft: 50,
+        color: "#fff",
     },
     price: {
-        fontSize: 18,
-        paddingLeft: 50
-    },
-    change: {
-        fontSize: 14,
-        position: "absolute",
-        right: 10,
+        fontSize: 16,
+        marginLeft: 50,
+        color: "#fff",
     },
 });
